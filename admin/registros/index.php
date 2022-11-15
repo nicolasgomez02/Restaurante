@@ -40,7 +40,7 @@
                 </div>
             </a>
 
-            <a href="usuarios/panelU.php">
+            <a href="../usuarios/panelU.php">
                 <div class="option">
                     <i class="far fa-id-badge" title="Usuarios"></i>
                     <h4>Usuarios</h4>

@@ -1,3 +1,14 @@
+<?php
+  session_start();
+  require('../conexion/conexion.php');
+
+  $nombre=$_SESSION['nombre'];
+  $apellido=$_SESSION['apellido'];
+  $tipo=$_SESSION['rol'];
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +36,9 @@
         margin-left:1000px;
         width:120px;
         height:30px;  
+      }
+      p{
+        font-size:20px;
       }
     </style>
 </head>
@@ -75,10 +89,10 @@
                     <h4>Agregar comidas</h4>
                 </div>
             </a>
-            <a href="registros/bebidas/panelBebidas.php">
+            <a href="clientes/panelC.php">
                 <div class="option">
-                <i class="fa-solid fa-wine-bottle" tittle="Bebidas"></i>
-                    <h4>Agregar bebidas</h4>
+                <i class="far fa-id-badge" title="Usuarios"></i>
+                    <h4>Clientes</h4>
                 </div>
             </a>
         </div>
@@ -86,10 +100,10 @@
     </div>
 
     <main>
-        <h1>Entrada</h1><br>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam sapiente cumque dicta animi explicabo sequi. Ex amet et, dolor eligendi commodi consectetur quo voluptatibus, cum nemo porro veniam at blanditiis?</p> <br>
+        <h1>Bienvenido</h1><br>
+        <p><?php  echo $nombre?> <?php echo  $apellido?></p> <br>
 
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident adipisci beatae impedit quia, deleniti quasi sequi iusto exercitationem nihil nulla, laboriosam dolore corrupti fuga officiis? Odit a mollitia id magnam amet delectus quia blanditiis reprehenderit explicabo eveniet! Rem voluptatum explicabo ipsum quae, dolorum, laudantium doloribus a, illum saepe sapiente accusantium dicta reiciendis? Amet iure porro voluptatum error fugit odit voluptas?</p>
+        <p><?php echo $tipo ?></p>
     </main>
 
     <script src="js/script.js"></script>

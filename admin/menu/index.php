@@ -62,19 +62,19 @@
 
         <div class="name__page">
         <i class=" fa-hat-chef"></i>
-            <h4><a href="index.php">El Buen Sabor</a></h4>
+            <h4><a href="../index.php">El Buen Sabor</a></h4>
         </div>
 
         <div class="options__menu"> 
 
-            <a href="index.php" class="selected">
+            <a href="../index.php" class="selected">
                 <div class="option">
                     <i class="fas fa-home" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
 
-            <a href="usuarios/panelU.php">
+            <a href="../usuarios/panelU.php">
                 <div class="option">
                     <i class="far fa-id-badge" title="Usuarios"></i>
                     <h4>Usuarios</h4>

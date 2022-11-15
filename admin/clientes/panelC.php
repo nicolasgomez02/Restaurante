@@ -3,7 +3,16 @@
    include_once("../../conexion/conexion.php");
 
  
-    $sentencia1="SELECT * FROM usuarios,rol WHERE usuarios.id_rol=rol.id_rol";
+   try {
+    $sql="SELECT * FROM rol WHERE id_rol = 4";
+    $resultado=$bd->prepare($sql);
+    $resultado->execute(array());
+
+
+    if ($iniciar=$resultado->fetch(PDO::FETCH_ASSOC)) {
+      
+    
+    $sentencia1="SELECT * FROM usuarios";
     $resultado=$bd ->prepare($sentencia1);
     $resultado->execute();
 
@@ -34,18 +43,18 @@
     
 <?php
                     if (!$_GET){
-                        header("Location:panelU.php?pagina=1");
+                        header("Location:panelC.php?pagina=1");
                     }
                     if ($_GET['pagina']>$paginas|| $_GET['pagina']<=0) {
-                        header("Location:panelU.php?pagina=1");
+                        header("Location:panelC.php?pagina=1");
                     }
 
-                    $iniciar=($_GET['pagina']-1)*$registros;
+                    $iniciar1=($_GET['pagina']-1)*$registros;
                     //echo $iniciar;
 
-                    $sentencia2="SELECT * FROM usuarios,rol WHERE usuarios.id_rol=rol.id_rol LIMIT :iniciar,:nregistros";
+                    $sentencia2="SELECT * FROM usuarios WHERE id_rol=4 LIMIT :iniciar,:nregistros";
                     $fell=$bd->prepare($sentencia2);
-                    $fell->bindParam(":iniciar",$iniciar,PDO::PARAM_INT);
+                    $fell->bindParam(":iniciar",$iniciar1,PDO::PARAM_INT);
                     $fell->bindParam(":nregistros",$registros,PDO::PARAM_INT);
                     $fell->execute();
 
@@ -64,7 +73,7 @@
 
         <div class="name__page">
         <i class=" fa-hat-chef"></i>
-            <h4><a href="../index.php">El Buen Sabor</a></h4>
+            <h4><a href="../../index.php">El Buen Sabor</a></h4>
         </div>
 
         <div class="options__menu"> 
@@ -124,20 +133,7 @@
                             <form action="crear.php" method="get">
                                 <label for="cedula">Cedula:</label>
                         <input type="text" id="ced" name="id" placeholder="Ingrese cedula" required>
-                        <label for="tipo">Tipo usuario:</label>
-                    <select id="tip" name="tip" scope="col">
-                        <option>Seleccione...</option>
-                            <?php
-		                        $sql= "SELECT * FROM rol"; 
-		                        $result=$bd->prepare($sql);
-		                        $result->execute(array());
-		                        while($registro=$result->fetch(PDO::FETCH_ASSOC)){
-		                            ?> 
-                                    <option value="<?php echo($registro['id_rol'])?>"> <?php echo($registro['tip_rol'])?>
-                                <?php 
-                                }
-                                ?>
-                    </select>
+                        <input type="hidden" name="tipo" value="<?php echo($iniciar['id_rol'])?>">
                     <label for="nombre">Nombre usuario:</label>
                     <input type="text" id="nombre" name="nomb" placeholder="Ingrese nombre" required>
                     <label for="apellido">Apellido usuario:</label>
@@ -169,14 +165,13 @@
             <div class="row">
                 <div class="col">
                 <table  class="table  table-hover table-striped table-light table-bordered table-sm  caption-top">
-                    <caption>Lista de usuarios registrados</caption>
+                    <caption>Lista de clientes registrados</caption>
         <tr >
             <th>Cedula <i class="bi bi-chevron-down"></i></th>
             <th>Nombre <i class="bi bi-chevron-down"></i></th>
             <th>Apellido <i class="bi bi-chevron-down"></i></th>
             <th>Telefono <i class="bi bi-chevron-down"></i></th>
             <th>Correo <i class="bi bi-chevron-down"></i></th>
-            <th>Rol <i class="bi bi-chevron-down"></i></th>
             <th colspan="3">Accion <i class="bi bi-chevron-down"></i></th>
         </tr>
         <?php
@@ -188,7 +183,6 @@
             <td><?php echo $move->ape_usu?></td>
             <td><?php echo $move->tel_usu?></td>
             <td><?php echo $move->email?></td>
-            <td><?php echo $move->tip_rol?></td>
             <td>
                     <a href="eliminar.php?id=<?php echo $move->id_usu?> &nomb=<?php echo $move->nom_usu?> &apel=<?php echo $move->ape_usu?> &tel=<?php echo $move->tel_usu?> "><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn">
                         Eliminar
@@ -248,20 +242,30 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item <?php  echo $_GET['pagina']<=1? 'disabled' : '' ?> ">
-        <a class="page-link" href="panelU.php?pagina=<?php echo $_GET['pagina']-1 ?>">Anterior</a>
+        <a class="page-link" href="panelC.php?pagina=<?php echo $_GET['pagina']-1 ?>">Anterior</a>
     </li>
     <?php
         for($i=0; $i<$paginas; $i++):?>
             <li class="page-item <?php echo $_GET ['pagina']==$i+1? 'active': ''?>">
                 <a class="page-link" 
-                href="panelU.php?pagina=<?php echo $i+1?>">
+                href="panelC.php?pagina=<?php echo $i+1?>">
                 <?php echo $i+1?></a>
             </li>
             <?php endfor?>
 
 
-    <li class="page-item <?php  echo $_GET['pagina']>=$paginas? 'disabled' : '' ?> "><a class="page-link" href="panelU.php?pagina=<?php echo $_GET['pagina']+1 ?>">Next</a></li>
+    <li class="page-item <?php  echo $_GET['pagina']>=$paginas? 'disabled' : '' ?> "><a class="page-link" href="panelC.php?pagina=<?php echo $_GET['pagina']+1 ?>">Next</a></li>
   </ul>
 </nav>
 </body>
 </html>
+<?php
+       }
+    } catch (Exception $th) {
+      die("Error: ". $th->GetMessage());
+    }finally{
+      $bd=null;
+    }
+
+
+?>

@@ -43,21 +43,21 @@
 
         <div class="options__menu"> 
 
-            <a href="index.php" class="selected">
+            <a href="../../index.php" class="selected">
                 <div class="option">
                     <i class="fas fa-home" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
 
-            <a href="usuarios/panelU.php">
+            <a href="../../usuarios/panelU.php">
                 <div class="option">
                     <i class="far fa-id-badge" title="Usuarios"></i>
                     <h4>Usuarios</h4>
                 </div>
             </a>
 
-            <a href="menu/index.php">
+            <a href="../../menu/index.php">
                 <div class="option">
                 <i class="fa-solid fa-kitchen-set" tittle="Menu"></i>
                     <h4>Crear menu</h4>
