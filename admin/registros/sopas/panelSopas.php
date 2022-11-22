@@ -2,7 +2,7 @@
     session_start();
     include("../../../conexion/conexion.php");
 
-    $consulta="SELECT * FROM tipo_comida  WHERE id_comida>100 AND id_comida<=200";
+    $consulta="SELECT * FROM tipo_comida,categorias  WHERE id_comida<50 and tipo_comida.id_cate=categorias.id_cate";
     $res=$bd ->prepare($consulta);
     $res->execute();
 ?>
@@ -13,8 +13,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurantes</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="../../../css/panelU.css">
 
@@ -23,70 +25,104 @@
 </head>
 <body id="body">
     
-    <header>
+<header>
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
             
         </div>
-        <div class="restaurante">
-            <img src="../../../img/Buensabor.png">
-        </div>
-        <div class="botones">
-                
-                <a href="#"><button>Cerrar</button>
-        </div>
-       
+         
+        <a id="cer" href="../includes/cerrar.php"> <input id="cerrar" type="submit" value="cerrar sesion"></a>
     </header>
 
     <div class="menu__side" id="menu_side">
 
         <div class="name__page">
-        <i class="fal fa-hat-chef"></i>
-            <h4>El Buen Sabor</h4>
+        <i class=" fa-hat-chef"></i>
+            <h4><a href="index.php">El Buen Sabor</a></h4>
         </div>
 
-        <div class="options__menu">	
+        <div class="options__menu"> 
 
-            <a href="#" class="selected">
+            <a href="../../index.php" class="selected">
                 <div class="option">
                     <i class="fas fa-home" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
 
-            <a href="#">
+            <a href="../../usuarios/panelU.php">
                 <div class="option">
-                    <i class="far fa-id-badge" title="Contacto"></i>
-                    <h4>Contacto</h4>
+                    <i class="far fa-id-badge" title="Usuarios"></i>
+                    <h4>Usuarios</h4>
                 </div>
             </a>
 
-            <a href="#">
+            <a href="../../menu/index.php">
                 <div class="option">
-                    <i class="far fa-address-card" title="Nosotros"></i>
-                    <h4>Nosotros</h4>
+                <i class="fa-solid fa-kitchen-set" tittle="Menu"></i>
+                    <h4>Crear menu</h4>
                 </div>
             </a>
-
-            <a href="#">
+            <a href="../index.php">
                 <div class="option">
-                    <i class="fa-light fa-hat-chef"></i>
-                    <h4>Nosotros</h4>
+                <i class="fa-solid fa-bowl-rice" tittle="Comidas"></i>
+                    <h4>Agregar comidas</h4>
                 </div>
             </a>
-
+            <a href="../bebidas/panelBebidas.php">
+                <div class="option">
+                <i class="fa-solid fa-wine-bottle" tittle="Bebidas"></i>
+                    <h4>Agregar bebidas</h4>
+                </div>
+            </a>
         </div>
 
     </div>
 
+
     <main>
-    <form method="post" >
         <div id="nim">
-            <a href="registrarS.php">
-                <button  type="button">
-                    Registrar
-                </button>
-            </a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Agregar comidas
+        </button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar comidas</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div><h1>Registro de Comidas</h1></div>
+        <form action="registrarS.php" method="GET" >
+            <label for="">Codigo de comida:</label>
+            <input type="number" name="cod" id="" placeholder="Ingrese el codigo de la comida " required>
+            <select name="categorias" id="cate">
+            <option value="text">Seleccione</option>
+        <?php
+		    $sql1= "SELECT * FROM categorias"; 
+		    $resultado1=$bd->prepare($sql1);
+		    $resultado1->execute(array());
+		    while($registro=$resultado1->fetch(PDO::FETCH_ASSOC)){
+		    ?> 
+                <option value="<?php echo($registro['id_cate'])?>" > <?php echo($registro['categoria'])?>
+            <?php 
+                }
+            ?>
+        </select>
+            <label for="">Nombre de comida:</label><br>
+            <input type="text" name="nom" id="" placeholder="Ingrese el nombre " required><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" name="submit" id="enviar" class="btn btn-primary">Agregar</button>
+      </div>
+      </form> 
+    </div>
+  </div>
+</div>
         </div>
         <div class="input_search">
             <input class="buscar"  type="search" name="busca"  id="" placeholder="Buscar"> 
@@ -100,6 +136,7 @@
         <tr >
             <th>Cod.de Comidas<i class="bi bi-chevron-down"></i></th>
             <th>Nombre de comida <i class="bi bi-chevron-down"></i></th>
+            <th>Categoria</th>
             
             <th colspan="3">Accion <i class="bi bi-chevron-down"></i></th>
         </tr>
@@ -109,16 +146,17 @@
         
         <tr>
             <td><?php echo $mostrar->id_comida;?></td>
-            <td><?php echo $mostrar->tipo_comida?></td>
+            <td><?php echo $mostrar->comida?></td>
+            <td><?php echo $mostrar->categoria?></td>
             
             <td>
                     <a  id="elimina" href="eliminar.php?id=<?php echo $mostrar->id_comida?>">
-                        <i class="bi bi-trash3-fill" title="Borrar"></i>
+                        Borrar
                     </a>
                 </td>
                 <td>
                     <a  id="modificar" href="editar.php?id=<?php echo $mostrar->id_comida?>">
-                        <i class="bi bi-pencil-square" title="editar"></i>
+                        Editar
                     </a>
                 </td>
             </tr>

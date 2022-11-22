@@ -1,4 +1,5 @@
 <?php
+session_start();
     require_once("conexion/conexion.php");
 
     $email = $_GET['correo'];
@@ -17,6 +18,9 @@
     $codigo = rand(1000,9999);
 
 
+    $_SESSION['cod']=$codigo;
+
+
     // mensaje
     $mensaje = '
 <html>
@@ -25,16 +29,11 @@
   <title>Restablecer</title>
 </head>
 <body>
-    <h1>Puriestur</h1>
+    <h1>Fast Order</h1>
     <div style="text-align:center; background-color:#B7CBDA">
-        <img src="img/puriesturlogo.png" alt="referen">
-        <p>Restablecer contraseña</p>
+        <p>Restablecer clave</p>
+        <p>Ingrese el siguiente codigo</p>
         <h3>'.$codigo.'</h3>
-        <p> 
-        <input type="hidden" value="<?php echo $email ?> <?php echo $token ?>">
-        <a 
-            href="http://localhost/transistem/includes/reset.php?email='.$email.'&token='.$token.'"> 
-            Para restablecer dar Click Aqui! </a> </p>
         <p> <small>Si usted no envio este código favor de omitir.</small> </p>
     </div>
 </body>

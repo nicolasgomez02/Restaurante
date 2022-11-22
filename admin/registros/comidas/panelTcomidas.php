@@ -2,7 +2,7 @@
     session_start();
     include("../../../conexion/conexion.php");
 
-    $consulta="SELECT * FROM tipo_comida  WHERE id_comida<=100";
+    $consulta="SELECT * FROM tipo_comida,categorias  WHERE id_comida>70 and tipo_comida.id_cate=categorias.id_cate";
     $res=$bd ->prepare($consulta);
     $res->execute();
 ?>
@@ -80,7 +80,6 @@
     </div>
 
     <main>
-    <form method="post" >
         <div id="nim">
                     <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -98,8 +97,21 @@
       <div class="modal-body">
       <div><h1>Registro de Comidas</h1></div>
         <form action="registrarC.php" method="GET" >
-            <label for="">Codigo de comida:</label><br>
-            <input type="number" name="cod" id="" placeholder="Ingrese el codigo de la comida " required><br>
+            <label for="">Codigo de comida:</label>
+            <input type="number" name="cod" id="" placeholder="Ingrese el codigo de la comida " required>
+            <select name="categorias" id="cate">
+            <option value="text">Seleccione</option>
+        <?php
+		    $sql= "SELECT * FROM categorias"; 
+		    $resultado=$bd->prepare($sql);
+		    $resultado->execute(array());
+		    while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+		    ?> 
+                <option value="<?php echo($registro['id_cate'])?>" > <?php echo($registro['categoria'])?>
+            <?php 
+                }
+            ?>
+        </select>
             <label for="">Nombre de comida:</label><br>
             <input type="text" name="nom" id="" placeholder="Ingrese el nombre " required><br>
       </div>
@@ -126,7 +138,7 @@
         <tr >
             <th>Cod.de Comidas<i class="bi bi-chevron-down"></i></th>
             <th>Nombre de comida <i class="bi bi-chevron-down"></i></th>
-            
+            <th>Categoria</th>
             <th colspan="3">Accion <i class="bi bi-chevron-down"></i></th>
         </tr>
         <?php
@@ -135,10 +147,11 @@
         
         <tr>
             <td><?php echo $mostrar->id_comida;?></td>
-            <td><?php echo $mostrar->tipo_comida?></td>
+            <td><?php echo $mostrar->comida?></td>
+            <td><?php echo $mostrar->categoria?></td>
             
             <td>
-                    <a  id="elimina" class="btn btn-primary" href="eliminar.php?id=<?php echo $mostrar->id_comida?>">
+                    <a  id="elimina" onclick="return confirm('¿Esta seguro de eliminar esta comida?')" class="btn btn-primary" href="eliminar.php?id=<?php echo $mostrar->id_comida?>">
                         Eliminar
                     </a>
                 </td>
@@ -162,8 +175,7 @@
                 <input  class="btn btn-primary" id="bot" type="button" value="cerrar" name="cerrar" >
             </a>
 		</td>
-	</table>
-    </form>      
+	</table>    
     </main>
     <script src="../../../js/script.js"></script>
 </body>

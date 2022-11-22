@@ -5,6 +5,7 @@
         
         $codigo=   $_GET["cod"];
         $producto=   $_GET["nom"];
+        $categoria= $_GET['categorias'];
         
 		
         
@@ -17,10 +18,10 @@
         if($consulta['id_comida'] == $codigo){
             echo"<script>alert('Ya existe esta Bebida.')</script>";
             echo"<script>window.location='panelBebidas.php'</script>";
-        }else if($codigo>=100){
-            $sql="INSERT INTO tipo_comida (id_comida,tipo_comida) values (:id, :tip)";
+        }else if($codigo>50){
+            $sql="INSERT INTO tipo_comida (id_comida,id_cate,comida) values (:id,:ca,:tip)";
             $resultado=$bd->prepare($sql);//$base es el nombre de la conexión
-            $resultado->execute(array(":id"=>$codigo,":tip"=>$producto));
+            $resultado->execute(array(":id"=>$codigo,":ca"=>$categoria,":tip"=>$producto));
             echo"<script>alert('Se agrego correctamente')</script>";
             echo"<script>window.location='panelBebidas.php'</script>";
         }else{

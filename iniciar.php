@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="css/iniciar.css">
     <title>El buen sabor</title>
 </head>
-<body>
+<body onload="form.id.focus()" onload="form1.id.focus()">
 
   <div id="back">
   <div class="backRight"></div>
@@ -53,16 +53,16 @@
     <div class="left">
       <div class="content">
         <h2>Registrarse</h2>
-        <form method="get" action="registrarse.php">
+        <form method="get" name="form1" action="registrarse.php">
           <div class="form-group">
-            <input class="inps" type="text" id="id" name="id"  placeholder="Cedula" required />
-            <input class="inps" type="text" name="nombre" placeholder="Nombre" required/>
-            <input class="inps" type="text" name="apellido" placeholder="Apellido" required/>
+            <input class="inps" type="text" id="id" name="id"  autocomplete="off"  placeholder="Cedula" required />
+            <input class="inps" type="text" name="nombre" autocomplete="off" placeholder="Nombre" required/>
+            <input class="inps" type="text" name="apellido" autocomplete="off" placeholder="Apellido" required/>
             <input type="hidden" name="tipo" value="<?php echo($iniciar['id_rol'])?>">
 
-            <input class="inps" type="int" name="telefono" placeholder="Celular" required/>
-            <input class="inps" type="text" name="email" placeholder="Correo" required/>
-            <input class="inps" type="password" id="clave" name="clave" placeholder="Contraseña" required />
+            <input class="inps" type="int" name="telefono" autocomplete="off" placeholder="Celular" required/>
+            <input class="inps" type="text" name="email" autocomplete="off" placeholder="Correo" required/>
+            <input class="inps" pattern="[A-Za-z0-9]{1,15}" maxlength="256" onkeypress="return check(event)" type="password" id="clave" name="clave" autocomplete="off" placeholder="Contraseña" required />
           </div>
           <div class="form-group"></div>
           <div class="form-group"></div>
@@ -76,10 +76,10 @@
     <div class="right">
       <div class="content1">
         <h2>Inicio Sesion</h2>
-        <form action=" includes/inicio.php" method="get" >
+        <form action=" includes/inicio.php" name="form" method="get" >
           <div class="form-group">
-            <input type="text" class="inps"  name="id" id="id" placeholder="Correo electronico"  required/>
-            <input type="password" class="inps"  name="clave" placeholder="Contraseña" required/>
+            <input type="text" class="inps"  name="id" id="id"   autocomplete="off"  placeholder="Correo electronico"  required/>
+            <input type="password" class="inps"  name="clave"  autocomplete="off" placeholder="Contraseña" required/>
           </div>
           <button id="login" name="btn" type="submit">Iniciar sesion</button>
           <button id="goRight" class="off">Registrarse</button>
@@ -99,13 +99,19 @@
         var btn =document.getElementById('login');
         var id= document.getElementById('id');
 
-        btn.addEventListener('click', function(evt) {
-             if(id.value.length >= 11){
-                alert("Se excedio del numero valido(10)")
-                evt.preventDefault();
-                return false;
-            }
-        })
+        function check(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla == 8) {
+        return true;
+    }
+
+    // Patrón de entrada, en este caso solo acepta numeros y letras
+    patron = /[A-Za-z0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
     </script>
 </body>
 </html>

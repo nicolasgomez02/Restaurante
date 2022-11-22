@@ -104,7 +104,7 @@ require("../../../conexion/conexion.php");
                     <label for="nombre">Nombre del producto:</label>   
                     <div class="field-container">
                         <i class="bi bi-person-circle"></i>
-                        <input type="varchar" name="nom" id="nombre" required value="<?php echo $editar['tipo_comida'] ?>">
+                        <input type="varchar" name="nom" id="nombre" required value="<?php echo $editar['comida'] ?>">
                         <p></p>
                     </div>
                     

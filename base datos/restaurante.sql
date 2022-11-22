@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2022 a las 17:19:09
+-- Tiempo de generación: 21-11-2022 a las 21:11:38
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -35,13 +35,34 @@ CREATE TABLE `bebida` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id_cate` int(11) NOT NULL,
+  `categoria` varchar(90) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id_cate`, `categoria`) VALUES
+(1, 'Desayunos'),
+(2, 'Almuerzos'),
+(3, 'Comidas');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detalle_menu`
 --
 
 CREATE TABLE `detalle_menu` (
   `id_detalle` int(11) NOT NULL,
   `id_comida` int(12) DEFAULT NULL,
-  `cod_menu` int(3) DEFAULT NULL
+  `cod_menu` int(3) DEFAULT NULL,
+  `hora` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -109,12 +130,11 @@ INSERT INTO `forma_pago` (`ref_pago`, `tip_pago`) VALUES
 
 CREATE TABLE `menu` (
   `cod_menu` int(3) NOT NULL,
-  `id_esta` int(3) DEFAULT NULL,
-  `id_comida` int(11) DEFAULT NULL,
+  `id_esta` int(3) NOT NULL,
+  `id_comida` int(11) NOT NULL,
   `precio_ofert` int(6) DEFAULT NULL,
   `precio` int(6) DEFAULT NULL,
   `tiempo_estimado` varchar(40) DEFAULT NULL,
-  `QR` float DEFAULT NULL,
   `foto` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -122,10 +142,8 @@ CREATE TABLE `menu` (
 -- Volcado de datos para la tabla `menu`
 --
 
-INSERT INTO `menu` (`cod_menu`, `id_esta`, `id_comida`, `precio_ofert`, `precio`, `tiempo_estimado`, `QR`, `foto`) VALUES
-(124, 3, 100, 0, 12000, '15 minutos', NULL, NULL),
-(233, 3, 101, NULL, 6000, 'no tiene', NULL, NULL),
-(555, 4, 98, NULL, 9000, '20 minutos', NULL, NULL);
+INSERT INTO `menu` (`cod_menu`, `id_esta`, `id_comida`, `precio_ofert`, `precio`, `tiempo_estimado`, `foto`) VALUES
+(101, 3, 2, 0, 10000, '30 minutos', 'macarrones.jpg');
 
 -- --------------------------------------------------------
 
@@ -147,6 +165,40 @@ INSERT INTO `mesas` (`cod_mesa`, `n_mesa`) VALUES
 (2, 'Mesa 2'),
 (3, 'Mesa 3'),
 (4, 'Mesa 4');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `passwords`
+--
+
+CREATE TABLE `passwords` (
+  `id_pass` int(11) NOT NULL,
+  `id_usu` int(12) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `fecha` date NOT NULL,
+  `tiken` varchar(200) NOT NULL,
+  `codigo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `passwords`
+--
+
+INSERT INTO `passwords` (`id_pass`, `id_usu`, `email`, `fecha`, `tiken`, `codigo`) VALUES
+(1, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '6407f3f50e', 1679),
+(2, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '297a33074b', 6238),
+(3, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '6aff5b0656', 4071),
+(4, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '11b98a6c33', 4791),
+(5, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', 'adbd448282', 2275),
+(6, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', 'fda0f53859', 9539),
+(7, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '7f3aa6f3f9', 9682),
+(8, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', 'e70e0cb904', 3390),
+(9, 134, 'nicolas.gomez5@misena.edu.co', '0000-00-00', 'ea3276ea33', 5370),
+(10, 1005772553, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '8b5dc06582', 1735),
+(11, 1005772553, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '1fe225e936', 2093),
+(12, 1005772553, 'nicolas.gomez5@misena.edu.co', '0000-00-00', '6be2baeed1', 8195),
+(13, 1005772553, 'nicolas.gomez5@misena.edu.co', '0000-00-00', 'b1337fef5e', 7281);
 
 -- --------------------------------------------------------
 
@@ -194,20 +246,19 @@ INSERT INTO `rol` (`id_rol`, `tip_rol`) VALUES
 
 CREATE TABLE `tipo_comida` (
   `id_comida` int(11) NOT NULL,
-  `tipo_comida` varchar(80) DEFAULT NULL
+  `id_cate` int(11) NOT NULL,
+  `comida` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tipo_comida`
 --
 
-INSERT INTO `tipo_comida` (`id_comida`, `tipo_comida`) VALUES
-(98, 'Pescado sudado'),
-(99, 'Spagueti'),
-(100, 'bandeja paisa'),
-(101, 'Coca cola'),
-(102, 'Pepsi'),
-(103, 'Ginger');
+INSERT INTO `tipo_comida` (`id_comida`, `id_cate`, `comida`) VALUES
+(1, 1, 'Changua'),
+(2, 1, 'Sopa de macarrones'),
+(51, 1, 'Chocolate'),
+(71, 1, 'Huevo con arroz');
 
 -- --------------------------------------------------------
 
@@ -250,9 +301,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usu`, `id_rol`, `nom_usu`, `ape_usu`, `tel_usu`, `email`, `contraseña`) VALUES
-(123, 2, 'Kamilo', 'Silva', 3248908763, 'ffgg@ggg', '$2y$10$Nt8Znx.pPJwvQPV1CdhoLehnwnHBgah.gt4Zrr2O00qMXKc70B3MK'),
-(134, 3, 'Kamilo', 'Rivera', 3229576101, 'r_juan98@gmail.com', '$2y$10$bvQGzn3gmTEkJ1fCsofcEuRAfEaL/Lc0Fd1g9VHcvkYkl7GtoKzC.'),
-(1005772553, 1, 'Nicolas Andres', 'Gomez Leal', 3212113205, 'ng@gmail.com', '$2y$10$4pO5BgfslQjSiJ986JfpsuodtirCZkuTBuGE/Qrw5QJQqIeSBF67K');
+(104, 4, 'dffg', 'sddf', 34322332, 'ddfgg@ggg', '$2y$10$W0TY/s8GYt1Ngb4w/2t6t.GlYfIifD/vIPZd32WNEgK.gd257tDp2'),
+(134, 3, 'Kamilo', 'Rivera', 3229576101, 'ng@msn.com', '$2y$10$Z/SmyVEFG8SQcalfyLgvB.1WP96ohJQa8sK.2eui5nl//kZBjuAsu'),
+(145, 2, 'Santiago', 'Sanchez', 3229576101, 'registro@baulphp.com', '$2y$10$UvwrFCjOufLGhTStNfk3detb20buQnvOgakfCjw3WUeV5QpaFhYVy'),
+(178, 4, 'Melanie', 'Leal', 321212345, 'ddfgg@ggg', '$2y$10$EboC2NyN4qknFayqWfpSa.IK.DDGfueBWqJUF.l9O5J9i6hrjKPtC'),
+(777, 4, 'rtrtr', 'fggfgf', 43454, 'ffgg@ggg', '$2y$10$VlV5uiHOh4jdny8LlJnzj.wFWPyz0Z3R0wPPtKexvq.IRK9OuACT2'),
+(1005772553, 1, 'Nicolas Andres', 'Gomez Leal', 3212113205, 'nicolas.gomez5@misena.edu.co', '$2y$10$GTIr.MWGF..RoW.wXvOEd.48Esa5d4W3oavdR3F3aTwf3X2cBB4dm');
 
 --
 -- Índices para tablas volcadas
@@ -263,6 +317,12 @@ INSERT INTO `usuarios` (`id_usu`, `id_rol`, `nom_usu`, `ape_usu`, `tel_usu`, `em
 --
 ALTER TABLE `bebida`
   ADD PRIMARY KEY (`id_bebida`);
+
+--
+-- Indices de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id_cate`);
 
 --
 -- Indices de la tabla `detalle_menu`
@@ -309,6 +369,12 @@ ALTER TABLE `mesas`
   ADD PRIMARY KEY (`cod_mesa`);
 
 --
+-- Indices de la tabla `passwords`
+--
+ALTER TABLE `passwords`
+  ADD PRIMARY KEY (`id_pass`);
+
+--
 -- Indices de la tabla `pedido`
 --
 ALTER TABLE `pedido`
@@ -328,7 +394,8 @@ ALTER TABLE `rol`
 -- Indices de la tabla `tipo_comida`
 --
 ALTER TABLE `tipo_comida`
-  ADD PRIMARY KEY (`id_comida`);
+  ADD PRIMARY KEY (`id_comida`),
+  ADD KEY `id_cate_ibfk` (`id_cate`);
 
 --
 -- Indices de la tabla `tipo_pedido`
@@ -354,6 +421,12 @@ ALTER TABLE `bebida`
   MODIFY `id_bebida` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `detalle_menu`
 --
 ALTER TABLE `detalle_menu`
@@ -364,6 +437,12 @@ ALTER TABLE `detalle_menu`
 --
 ALTER TABLE `detalle_pedido`
   MODIFY `id_detallep` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `passwords`
+--
+ALTER TABLE `passwords`
+  MODIFY `id_pass` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -407,8 +486,7 @@ ALTER TABLE `detalle_pedido`
 -- Filtros para la tabla `menu`
 --
 ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_esta`) REFERENCES `estado` (`id_esta`),
-  ADD CONSTRAINT `menu_ibfk_2` FOREIGN KEY (`id_comida`) REFERENCES `tipo_comida` (`id_comida`);
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`id_esta`) REFERENCES `estado` (`id_esta`);
 
 --
 -- Filtros para la tabla `pedido`
@@ -418,6 +496,12 @@ ALTER TABLE `pedido`
   ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`cod_mesa`) REFERENCES `mesas` (`cod_mesa`),
   ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_esta`) REFERENCES `estado` (`id_esta`),
   ADD CONSTRAINT `pedido_ibfk_4` FOREIGN KEY (`ref_pago`) REFERENCES `forma_pago` (`ref_pago`);
+
+--
+-- Filtros para la tabla `tipo_comida`
+--
+ALTER TABLE `tipo_comida`
+  ADD CONSTRAINT `id_cate_ibfk` FOREIGN KEY (`id_cate`) REFERENCES `categorias` (`id_cate`);
 
 --
 -- Filtros para la tabla `usuarios`

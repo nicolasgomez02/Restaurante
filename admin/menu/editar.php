@@ -1,12 +1,15 @@
 <?php
 
 session_start();
-require("../../../conexion/conexion.php");
-    $modi=     $_GET['id'];
+require("../../conexion/conexion.php");
+$modi=     $_GET['id'];
+
+
+   
 
     
     try {
-        $sql="SELECT * FROM tipo_comida WHERE id_comida= :co";
+        $sql="SELECT * FROM menu,estado,tipo_comida WHERE cod_menu= :co and menu.id_esta=estado.id_esta and menu.id_comida=tipo_comida.id_comida";
         $result=$bd->prepare($sql);
         $result->execute(array(":co" => $modi));    
         
@@ -22,8 +25,8 @@ require("../../../conexion/conexion.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurantes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
-    <link rel="stylesheet" href="../../../css/editarC.css">
+            
+    <link rel="stylesheet" href="../../css/editarC.css">
     <script src="https://kit.fontawesome.com/0046f31256.js" crossorigin="anonymous"></script>
     
 </head>
@@ -35,7 +38,7 @@ require("../../../conexion/conexion.php");
             
         </div>
         <div class="restaurante">
-            <img src="../../../img/Buensabor.png">
+            <img src="../../img/Buensabor.png">
         </div>
         <div class="botones">
                 
@@ -92,22 +95,59 @@ require("../../../conexion/conexion.php");
                         <p>Editar registro</p>
                 </span>
             </header>
-            <form  action="GuardarS.php" method="POST" id="contact">
+            <form  action="modificar.php" method="POST" id="contact">
                 <div class="grup">
                 </div>
-                <label for="cedula">Codigo del producto:</label>
+                <label for="cedula">Codigo menu:</label>
                     <div class="field-container">
-                        <i class="bi bi-person-video2"></i>
-                        <input type="text" readonly name="cod" value="<?php echo $editar['id_comida'] ?>">
+                     
+                        <input type="text" readonly name="menu" value="<?php echo $editar['cod_menu'] ?>">
                         <p></p>
                     </div> 
-                    <label for="nombre">Nombre del producto:</label>   
+       
+                    <label for="apellido">Comida:</label>  
                     <div class="field-container">
-                        <i class="bi bi-person-circle"></i>
-                        <input type="varchar" name="nom" id="nombre" required value="<?php echo $editar['comida'] ?>">
+                      <?php $id_comida=$editar['id_comida']; 
+                            $_SESSION['id_comid']=$id_comida;
+                      ?>
+                        <input type="text"  name="comida" requiered value="<?php echo $editar['comida'] ?>">
                         <p></p>
                     </div>
+                    <label for="Rol">Estado:</label>
+                   
+                    <div class="field-container">
+                        <select name="estado">
+                        <?php
+                            $sq= "SELECT * FROM estado WHERE id_esta >= 3"; 
+                            $resultado=$bd->prepare($sq);
+                            $resultado->execute(array());
+                            while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                        ?>
+                        <option value="<?php echo $registro['id_esta'];?>"><?php echo $registro['tipo_estado']?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                        <p></p>
+                    </div>
+                    <label for="telefono">Precio oferta:</label> 
+                    <div class="field-container">
+                        
+                        <input type="number" name="precioO" required value="<?php echo $editar['precio_ofert'] ?>">
+                        <p></p>
+                    </div>
+                    <label for="correo">Precio:</label> 
+                    <div class="field-container">
+                   
+                        <input type="number" name="precio" required value="<?php echo $editar['precio'] ?>">
+                        <p></p>
+                    </div>
+                    <label for="correo">Tiempo:</label> 
+                    <div class="field-container">
                     
+                        <input type="varchar" name="tiempo" required value="<?php echo $editar['tiempo_estimado'] ?>">
+                        <p></p>
+                    </div>
                     <input type="submit" id="bot" name="modi" value="Guardar">
                     <input type="hidden" name="formreg" value="1">
                 <p class="warnings" id="warnings"></p>
@@ -116,7 +156,7 @@ require("../../../conexion/conexion.php");
                 
     </main>
 
-    <script src="../../../js/script.js"></script>
+    <script src="../../js/script.js"></script>
 </body>
 </html>
             <?php

@@ -2,7 +2,7 @@
     session_start();
     include("../../../conexion/conexion.php");
 
-    $consulta="SELECT * FROM tipo_comida WHERE id_comida>100";
+    $consulta="SELECT * FROM tipo_comida,categorias WHERE id_comida>50 and id_comida<70 and tipo_comida.id_cate=categorias.id_cate";
     $res=$bd ->prepare($consulta);
     $res->execute();
 ?>
@@ -25,58 +25,56 @@
 </head>
 <body id="body">
     
-    <header>
+<header>
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
             
         </div>
-        <div class="restaurante">
-            <img src="../../../img/Buensabor.png">
-        </div>
-        <div class="botones">
-                
-                <a href="#"><button>Cerrar</button>
-        </div>
-       
+         
+        <a id="cer" href="../includes/cerrar.php"> <input id="cerrar" type="submit" value="cerrar sesion"></a>
     </header>
 
     <div class="menu__side" id="menu_side">
 
         <div class="name__page">
-        <i class="fal fa-hat-chef"></i>
-            <h4>El Buen Sabor</h4>
+        <i class=" fa-hat-chef"></i>
+            <h4><a href="index.php">El Buen Sabor</a></h4>
         </div>
 
-        <div class="options__menu">	
+        <div class="options__menu"> 
 
-            <a href="#" class="selected">
+            <a href="../../index.php" class="selected">
                 <div class="option">
                     <i class="fas fa-home" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
 
-            <a href="#">
+            <a href="../../usuarios/panelU.php">
                 <div class="option">
-                    <i class="far fa-id-badge" title="Contacto"></i>
-                    <h4>Contacto</h4>
+                    <i class="far fa-id-badge" title="Usuarios"></i>
+                    <h4>Usuarios</h4>
                 </div>
             </a>
 
-            <a href="#">
+            <a href="../../menu/index.php">
                 <div class="option">
-                    <i class="far fa-address-card" title="Nosotros"></i>
-                    <h4>Nosotros</h4>
+                <i class="fa-solid fa-kitchen-set" tittle="Menu"></i>
+                    <h4>Crear menu</h4>
                 </div>
             </a>
-
-            <a href="#">
+            <a href="../index.php">
                 <div class="option">
-                    <i class="fa-light fa-hat-chef"></i>
-                    <h4>Nosotros</h4>
+                <i class="fa-solid fa-bowl-rice" tittle="Comidas"></i>
+                    <h4>Agregar comidas</h4>
                 </div>
             </a>
-
+            <a href="../bebidas/panelBebidas.php">
+                <div class="option">
+                <i class="fa-solid fa-wine-bottle" tittle="Bebidas"></i>
+                    <h4>Agregar bebidas</h4>
+                </div>
+            </a>
         </div>
 
     </div>
@@ -102,6 +100,20 @@
         <form action="registrarB.php" method="GET" >
             <label for="">Codigo de Bebida:</label>
             <input type="number" name="cod" id="" placeholder="Ingrese el codigo de su Bebida " required>
+            <label>Categoria:</label>
+            <select name="categorias" id="cate">
+            <option value="text">Seleccione</option>
+        <?php
+		    $sql= "SELECT * FROM categorias"; 
+		    $resultado=$bd->prepare($sql);
+		    $resultado->execute(array());
+		    while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+		    ?> 
+                <option value="<?php echo($registro['id_cate'])?>" > <?php echo($registro['categoria'])?>
+            <?php 
+                }
+            ?>
+        </select>
             <label for="">Nombre de Bebida:</label>
             <input type="text" name="nom" id="" placeholder="Ingrese el nombre " required>
       </div>
@@ -130,6 +142,7 @@
         <tr >
             <th>Cod.de Comidas<i class="bi bi-chevron-down"></i></th>
             <th>Nombre de comida <i class="bi bi-chevron-down"></i></th>
+            <th>Categoria</th>
             
             <th colspan="3">Accion <i class="bi bi-chevron-down"></i></th>
         </tr>
@@ -139,10 +152,11 @@
         
         <tr>
             <td><?php echo $mostrar->id_comida;?></td>
-            <td><?php echo $mostrar->tipo_comida?></td>
+            <td><?php echo $mostrar->comida?></td>
+            <td><?php echo $mostrar->categoria?></td>
             
             <td>
-                    <a  id="elimina" class="btn btn-primary" href="eliminar.php?id=<?php echo $mostrar->id_comida?>">
+                    <a  id="elimina" onclick="return confirm('¿Esta seguro de eliminar esta bebida?')" class="btn btn-primary" href="eliminar.php?id=<?php echo $mostrar->id_comida?>">
                         Eliminar
                     </a>
                 </td>

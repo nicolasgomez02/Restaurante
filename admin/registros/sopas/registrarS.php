@@ -5,6 +5,7 @@
         
         $codigo=   $_GET["cod"];
         $producto=   $_GET["nom"];
+        $cate = $_GET['categorias'];
         
 		
         
@@ -14,13 +15,13 @@
         $resultado1->execute(array(":cod"=>$codigo));
         $consulta=$resultado1->fetch(PDO::FETCH_ASSOC);
 
-        if($consulta){
+        if($consulta['id_comida'] == $codigo){
             echo"<script>alert('Ya existe esta Bebida.')</script>";
             echo"<script>window.location='panelSopas.php'</script>";
-        }elseif($codigo>100 AND $codigo<=200){
-            $sql="INSERT INTO tipo_comida (id_comida,tipo_comida) values (:id, :tip)";
+        }elseif($codigo>1 AND $codigo<50){
+            $sql="INSERT INTO tipo_comida (id_comida,id_cate,comida) values (:id, :cate,:tip)";
             $resultado=$bd->prepare($sql);//$base es el nombre de la conexión
-            $resultado->execute(array(":id"=>$codigo,":tip"=>$producto));
+            $resultado->execute(array(":id"=>$codigo,":cate"=>$cate,":tip"=>$producto));
             echo"<script>alert('Se ha realizado')</script>";
             echo"<script>window.location='panelSopas.php'</script>";
         }else{

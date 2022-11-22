@@ -1,15 +1,14 @@
 <?php
-    require("../../conexion/conexion.php");
+
+require("../../conexion/conexion.php");
+
+
+    
     $cons = "SELECT * FROM menu,estado,tipo_comida WHERE menu.id_esta=estado.id_esta and menu.id_comida=tipo_comida.id_comida";
     $sql = $bd->prepare($cons);
     $sql->execute(array());
 
-    $registros=3;//indica que se van a ver 3 registro por págin
-    
-    $total=$sql->rowCount();
-   // echo $total;
-   $paginas=$total/4;
-   $paginas=ceil($paginas);
+
 
 ?>
 
@@ -26,82 +25,48 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>   
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/menu.css">
-    <title>Document</title>
+    <title>El buen sabor</title>
 </head>
 <body>
 
-<?php
-                    if (!$_GET){
-                        header("Location:index.php?pagina=1");
-                    }
-                    if ($_GET['pagina']>$paginas|| $_GET['pagina']<=0) {
-                        header("Location:index.php?pagina=1");
-                    }
+<header class="header">
+		<div class="container">
+		<div class="btn-menu">
+			<label for="btn-menu">☰</label>
+		</div>
+			<div class="logo">
+				<h1>Logotipo</h1>
+			</div>
+			<nav class="menu">
+				<a href="../../includes/cerrar.php">Cerrar sesion</a>      
+			</nav>
+		</div>
+	</header>
+	<div class="capa"></div>
+<!--	--------------->
+<input type="checkbox" id="btn-menu">
+<div class="container-menu">
+	<div class="cont-menu">
+		<nav>
+			<a href="../index.php">Inicio</a>
+			<a href="../usuarios/panelU.php">Usuarios</a>
+			<a href="../clientes/panelC.php">Clientes</a>
+			<a href="index.php">Menu</a>
+			<a href="../registros/index.php">Registros</a>
+			<a href="#">Instagram</a>
+		</nav>
+		<label for="btn-menu">✖️</label>
+	</div>
+</div>
 
-                    $iniciar=($_GET['pagina']-1)*$registros;
-                    //echo $iniciar;
+</header>
 
-                    $cons1= "SELECT * FROM menu,estado,tipo_comida WHERE menu.id_esta=estado.id_esta and menu.id_comida=tipo_comida.id_comida LIMIT :iniciar,:nregistros";
-                    $fell=$bd->prepare($cons1);
-                    $fell->bindParam(":iniciar",$iniciar,PDO::PARAM_INT);
-                    $fell->bindParam(":nregistros",$registros,PDO::PARAM_INT);
-                    $fell->execute();
 
-                    $camb=$fell->fetchAll();
-                    ?>
-<header>
-        <div class="icon__menu">
-            <i class="fas fa-bars" id="btn_open"></i>
-            
-        </div>
-         
-        <a id="cer" href="../includes/cerrar.php"> <input id="cerrar" type="submit" value="cerrar sesion"></a>
-    </header>
-
-    <div class="menu__side" id="menu_side">
-
-        <div class="name__page">
-        <i class=" fa-hat-chef"></i>
-            <h4><a href="../index.php">El Buen Sabor</a></h4>
-        </div>
-
-        <div class="options__menu"> 
-
-            <a href="../index.php" class="selected">
-                <div class="option">
-                    <i class="fas fa-home" title="Inicio"></i>
-                    <h4>Inicio</h4>
-                </div>
-            </a>
-
-            <a href="../usuarios/panelU.php">
-                <div class="option">
-                    <i class="far fa-id-badge" title="Usuarios"></i>
-                    <h4>Usuarios</h4>
-                </div>
-            </a>
-
-            <a href="index.php">
-                <div class="option">
-                <i class="fa-solid fa-kitchen-set" tittle="Menu"></i>
-                    <h4>Crear menu</h4>
-                </div>
-            </a>
-            <a href="../registros/index.php">
-                <div class="option">
-                <i class="fa-solid fa-bowl-rice" tittle="Comidas"></i>
-                    <h4>Agregar comidas</h4>
-                </div>
-            </a>
-            <a href="../registros/bebidas/panelBebidas.php">
-                <div class="option">
-                <i class="fa-solid fa-wine-bottle" tittle="Bebidas"></i>
-                    <h4>Agregar bebidas</h4>
-                </div>
-            </a>
-        </div>
-
-    </div>
+    <input type="text">
+    <br>
+    <br>
+    <input type="text">
+    <br>
 
     <div class="box-body"> 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -143,7 +108,7 @@
 
                         while ($menus=$result1->fetch(PDO::FETCH_ASSOC)) {
                             ?>
-                                <option value="<?php echo($menus['id_comida'])?>"><?php echo($menus['tipo_comida'])?></option>
+                                <option value="<?php echo($menus['id_comida'])?>"><?php echo($menus['comida'])?></option>
                             <?php
                         }
                     ?>
@@ -160,15 +125,17 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" id="enviar" class="btn btn-primary">Crear menu</button>
+        <button type="button" name="crear" id="enviar" class="btn btn-primary">Crear menu</button>
       </div>
       </form>
       <script src="../../js/app.js"></script>
     </div>
   </div>
 </div>
+
+
         
-        <form method="post" name="form6" action="">
+        
             <div class="form-group">    
                 <table class="table  table-hover table-striped table-light table-bordered table-sm  caption-top"> 
                     <tr>
@@ -183,11 +150,12 @@
                     </tr>
                     <?php
 
-                            foreach ($camb as $resul) 
+                            foreach ($sql as $resul) 
                             {
                                 $d=$resul->cod_menu;
                                 $no=$resul->tipo_estado;
-                                $ap=$resul->tipo_comida;
+                                $ap=$resul->id_comida;
+                                $id=$resul->comida;
                                 $ed=$resul->precio_ofert;
                                 $te=$resul->precio;
                                 $co=$resul->tiempo_estimado;
@@ -196,14 +164,88 @@
                     <tr>
           				<td><?php echo $d?></td>
           				<td><?php echo $no?></td>
-                        <td><?php echo $ap?></td>
+                        <td><?php echo $id?></td>
                         <td><?php echo $ed?></td>
                         <td><?php echo $te?></td>
                         <td><?php echo $co?></td>
                         <td><?php echo (' <img src="../../foto/'.$fo.'" width="100"> ') ?></td>
-                        <td><a href=# class="button">Modificar</a></td>
-                        <td><a href=# class="button green">Eliminar</a></td>
-                        <td><a href=# class="button red">Ver</a></td>
+
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                Modificar
+            </button></td>
+
+<!-- Modal -->
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel1">Menu</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h1>Modifica el menu</h1>
+                        <form action="modificar.php" method="POST" id="contact" >
+
+                        <label for="cedula">Codigo menu:</label>
+                    <div class="field-container">
+                     
+                        <input type="text" readonly name="menu" value="<?php echo $d?>">
+     
+                    </div> 
+       
+                    <label for="apellido">Comida:</label>  
+                    <div class="field-container">
+
+                        <input type="text"  name="" requiered value="<?php echo $id ?>">
+                        <input type="hidden" name="comida" value="<?php echo $ap?>">
+                   
+                    </div>
+                    <label for="Rol">Estado:</label>
+                   
+                    <div class="field-container">
+                        <select name="estado">
+                        <?php
+                            $sq= "SELECT * FROM estado WHERE id_esta >= 3"; 
+                            $resultado=$bd->prepare($sq);
+                            $resultado->execute(array());
+                            while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+                        ?>
+                        <option value="<?php echo $registro['id_esta'];?>"><?php echo $registro['tipo_estado']?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                      
+                    </div>
+                    <label for="telefono">Precio oferta:</label> 
+                    <div class="field-container">
+                        
+                        <input type="number" name="precioO" required value="<?php echo $ed ?>">
+                     
+                    </div>
+                    <label for="correo">Precio:</label> 
+                    <div class="field-container">
+                   
+                        <input type="number" name="precio" required value="<?php echo $te ?>">
+                    
+                    </div>
+                    <label for="correo">Tiempo:</label> 
+                    <div class="field-container">
+                    
+                        <input type="varchar" name="tiempo" required value="<?php echo $co ?>">
+                    
+                    </div>
+                       
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Modificar</button>
+            </div>
+            </form>
+    </div>
+  </div>
+</div>
+                        <td><a class="btn btn-danger"  onclick="return confirm('¿Esta seguro de eliminar este menu?')" href="eliminar.php?id=<?php echo $d?>" class="button green">Eliminar</a></td>
                     </tr>
                     <?php 
                         }
@@ -221,23 +263,25 @@
     }
 ?>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item <?php  echo $_GET['pagina']<=1? 'disabled' : '' ?> ">
-        <a class="page-link" href="index.php?pagina=<?php echo $_GET['pagina']-1 ?>">Anterior</a>
-    </li>
-    <?php
-        for($i=0; $i<$paginas; $i++):?>
-            <li class="page-item <?php echo $_GET ['pagina']==$i+1? 'active': ''?>">
-                <a class="page-link" 
-                href="index.php?pagina=<?php echo $i+1?>">
-                <?php echo $i+1?></a>
-            </li>
-            <?php endfor?>
+<script>
+    $(document).ready(function() {
+    $('#search').keyup(function(event) {
+        event.preventDefault();
+        let datos = $('#form').serializeArray();
+        $.post({
+            url: 'actions.php',
+            data: datos,
+            success: function(response) {
+                $('#response').html(response);
+            }
+        })
+    })
+
+});
+</script>
 
 
-    <li class="page-item <?php  echo $_GET['pagina']>=$paginas? 'disabled' : '' ?> "><a class="page-link" href="index.php?pagina=<?php echo $_GET['pagina']+1 ?>">Next</a></li>
-  </ul>
-</nav>
 </body>
 </html>
+
+

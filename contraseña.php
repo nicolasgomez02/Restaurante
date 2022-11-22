@@ -9,7 +9,8 @@
 <body>
     <h1>Para recuperar ingrese su correo electronico</h1>
     <form action="recu.php" method="get">
-    <input type="email" name="correo" placeholder="Ingrese su correo">    
+    <input type="email" name="correo" autocomplete="off" placeholder="Ingrese su correo"> 
+    <input type="number" name="cedu" autocomplete="off" placeholder="Ingrese cedula">   
         <input type="submit" name="btn" value="Recuperar">
     </form>
 </body>

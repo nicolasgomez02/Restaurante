@@ -53,7 +53,7 @@ require("../../../conexion/conexion.php");
 
         <div class="options__menu">	
 
-            <a href="#" class="selected">
+            <a href="../../index.php" class="selected">
                 <div class="option">
                     <i class="fas fa-home" title="Inicio"></i>
                     <h4>Inicio</h4>
@@ -104,7 +104,7 @@ require("../../../conexion/conexion.php");
                     <label for="nombre">Nombre del producto:</label>   
                     <div class="field-container">
                         <i class="bi bi-person-circle"></i>
-                        <input type="varchar" name="nom" id="nombre" required value="<?php echo $editar['tipo_comida'] ?>">
+                        <input type="varchar" name="nom" id="nombre" required value="<?php echo $editar['comida'] ?>">
                         <p></p>
                     </div>
                     

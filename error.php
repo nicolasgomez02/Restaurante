@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="../css/iniciar.css">
     <title>El buen sabor</title>
 </head>
-<body>
+<body onload="form.id.focus()">
 
   <div id="back">
   <div class="backRight"></div>
@@ -75,14 +75,16 @@
       <div class="content1">
         <h2>Inicio Sesion</h2>
         <h2 id="error">Error de sesion</h2>
-        <form action="inicio.php" method="get" >
+        <form action="inicio.php" name="form" method="get" >
           <div class="form-group">
-            <input type="text" class="inps"  name="id" id="id" placeholder="Cedula"  required/>
+            <input type="text" class="inps"  name="id" id="id" placeholder="Correo electronico"  required/>
             <input type="password" class="inps"  name="clave" placeholder="Contraseña" required/>
           </div>
           <button id="login" name="btn" type="submit">Iniciar sesion</button>
           <button id="goRight" class="off">Registrarse</button>
-
+          <div>
+            <a href="../contraseña.php">¿Olvido su contraseña?</a>
+          </div>
         </form>
       </div>
     </div>

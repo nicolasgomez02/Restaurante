@@ -4,6 +4,7 @@
   if (isset($_GET["correo"])) 
   {
       $email = $_GET['correo'];
+      $cedu = $_GET['cedu'];
 
       $sql= "SELECT * FROM usuarios where email = :id"; 
       $resultado=$bd->prepare($sql);
@@ -27,7 +28,7 @@
               $resultado->execute(array(":idu"=>$usu, ":em"=>$email, ":tok"=>$token, ":cod"=>$codigo));
 
               echo "<script>alert ('Le llegara un codigo de verificacion.')</script>";
-              echo "<script>window.location='vericodi.php'</script>";
+              echo "<script>window.location='vericodi.php?cedu=$cedu'</script>";
           }
 
       }

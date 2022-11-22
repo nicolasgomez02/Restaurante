@@ -1,3 +1,9 @@
+<?php
+require("conexion/conexion.php");
+    $cedu=$_GET['cedu'];
+    $_SESSION['cedu']=$cedu;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +13,9 @@
     <title>Recuperar</title>
 </head>
 <body>
-    <form action="cambiar.php" method="get">
+    <form action="codi.php" method="get">
         <input type="number" name="codi" placeholder="Ingrese el codigo">
+        <input type="hidden" name="cedu" value="<?php echo $cedu?>">
         <input type="submit" value="Confirmar">
     </form>
 </body>

@@ -5,6 +5,7 @@
         
         $codigo=   $_GET["cod"];
         $producto=   $_GET["nom"];
+        $categoria = $_GET['categorias'];
         
 		
         
@@ -14,13 +15,13 @@
         $resultado1->execute(array(":cod"=>$codigo));
         $consulta=$resultado1->fetch(PDO::FETCH_ASSOC);
 
-        if($consulta){
+        if($consulta['id_comida']==$codigo){
             echo"<script>alert('Ya existe esta Comida.')</script>";
             echo"<script>window.location='panelTcomidas.php'</script>";
-        }elseif($codigo<=100){
-            $sql="INSERT INTO tipo_comida (id_comida,tipo_comida) values (:id, :tip)";
-            $resultado=$bd->prepare($sql);//$base es el nombre de la conexión
-            $resultado->execute(array(":id"=>$codigo,":tip"=>$producto));
+        }else if($codigo>70){
+            $sql="INSERT INTO tipo_comida (id_comida,id_cate,comida) values (:id, :cate,:tip)";
+            $resultado=$bd->prepare($sql);//$bd es el nombre de la conexión
+            $resultado->execute(array(":id"=>$codigo,":cate"=>$categoria,":tip"=>$producto));
             echo"<script>alert('Se ha realizado con exito su registro')</script>";
             echo"<script>window.location='panelTcomidas.php'</script>";
         }else{

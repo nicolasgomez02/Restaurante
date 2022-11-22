@@ -51,59 +51,37 @@
 
                     $camb=$fell->fetchAll();
                     ?>
-<header>
-        <div class="icon__menu">
-            <i class="fas fa-bars" id="btn_open"></i>
-            
-        </div>
-         
-        <a id="cer" href="../includes/cerrar.php"> <input id="cerrar" type="submit" value="cerrar sesion"></a>
-    </header>
 
-    <div class="menu__side" id="menu_side">
 
-        <div class="name__page">
-        <i class=" fa-hat-chef"></i>
-            <h4><a href="../index.php">El Buen Sabor</a></h4>
-        </div>
-
-        <div class="options__menu"> 
-
-            <a href="../index.php" class="selected">
-                <div class="option">
-                    <i class="fas fa-home" title="Inicio"></i>
-                    <h4>Inicio</h4>
-                </div>
-            </a>
-
-            <a href="panelU.php">
-                <div class="option">
-                    <i class="far fa-id-badge" title="Usuarios"></i>
-                    <h4>Usuarios</h4>
-                </div>
-            </a>
-
-            <a href="../menu/index.php">
-                <div class="option">
-                <i class="fa-solid fa-kitchen-set" tittle="Menu"></i>
-                    <h4>Crear menu</h4>
-                </div>
-            </a>
-            <a href="../registros/index.php">
-                <div class="option">
-                <i class="fa-solid fa-bowl-rice" tittle="Comidas"></i>
-                    <h4>Agregar comidas</h4>
-                </div>
-            </a>
-            <a href="registros/bebidas/panelBebidas.php">
-                <div class="option">
-                <i class="fa-solid fa-wine-bottle" tittle="Bebidas"></i>
-                    <h4>Agregar bebidas</h4>
-                </div>
-            </a>
-        </div>
-
-    </div>
+	<header class="header">
+		<div class="container">
+		<div class="btn-menu">
+			<label for="btn-menu">☰</label>
+		</div>
+			<div class="logo">
+				<h1>Logotipo</h1>
+			</div>
+			<nav class="menu">
+				<a href="../../includes/cerrar.php">Cerrar sesion</a>      
+			</nav>
+		</div>
+	</header>
+	<div class="capa"></div>
+<!--	--------------->
+<input type="checkbox" id="btn-menu">
+<div class="container-menu">
+	<div class="cont-menu">
+		<nav>
+			<a href="../index.php">Inicio</a>
+			<a href="panelU.php">Usuarios</a>
+			<a href="../clientes/panelC.php">Clientes</a>
+			<a href="menu/index.php">Menu</a>
+			<a href="../registros/index.php">Registros</a>
+			<a href="#">Instagram</a>
+		</nav>
+		<label for="btn-menu">✖️</label>
+	</div>
+</div>
 
     <main>
         <div id="nim">
@@ -190,7 +168,7 @@
             <td><?php echo $move->email?></td>
             <td><?php echo $move->tip_rol?></td>
             <td>
-                    <a href="eliminar.php?id=<?php echo $move->id_usu?> &nomb=<?php echo $move->nom_usu?> &apel=<?php echo $move->ape_usu?> &tel=<?php echo $move->tel_usu?> "><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn">
+                    <a onclick="return confirm('¿Esta seguro de eliminar el usuario?')" href="eliminar.php?id=<?php echo $move->id_usu?> &nomb=<?php echo $move->nom_usu?> &apel=<?php echo $move->ape_usu?> &tel=<?php echo $move->tel_usu?> "><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn">
                         Eliminar
                     </button></a>
                             
@@ -209,13 +187,7 @@
             </div>
         </div>
         
-    <table>
-		<td>
-			<a href="../index.php" onmouseup="window.close()">
-                <input  class="btn btn-primary" id="bot" type="button" value="cerrar" name="cerrar" >
-            </a>
-		</td>
-	</table>
+  
     </main>
 
     

@@ -11,7 +11,7 @@
             $clave = htmlentities(addslashes($_GET['clave']));
             $contador = 0;
 
-            $sentencia = "SELECT * FROM usuarios,rol Where id_usu=:id || email=:co and usuarios.id_rol=rol.id_rol";
+            $sentencia = "SELECT * FROM usuarios,rol WHERE id_usu=:id OR email=:co and usuarios.id_rol=rol.id_rol";
             $select= $bd->prepare($sentencia);
             $select->execute(array(":id"=>$inicio,":co" =>$inicio));
             

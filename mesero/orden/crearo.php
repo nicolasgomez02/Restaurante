@@ -25,15 +25,15 @@
             if (isset($_GET['button'])) {
                 
                 $id = $_GET['id'];
-                $select= "SELECT * FROM clientes WHERE id_cliente=:id";
+                $select= "SELECT * FROM usuarios WHERE id_usu=:id";
                 $result= $bd ->prepare($select);
                 $result->execute(array(":id"=>$id));
                     if ($buscar=$result->fetch(PDO::FETCH_ASSOC)) {
                         $ced = $_GET['id'];
-                        $nombre_cliente = $buscar['nombre'];
-                        $apellido_cliente = $buscar['apellido'];
-                        $telefono = $buscar['telefono'];
-                        $email = $buscar['correo'];
+                        $nombre_cliente = $buscar['nom_usu'];
+                        $apellido_cliente = $buscar['ape_usu'];
+                        $telefono = $buscar['tel_usu'];
+                        $email = $buscar['email'];
                         
                         $id=$_SESSION['id']; 
                         $nombre=$_SESSION['nombre'];

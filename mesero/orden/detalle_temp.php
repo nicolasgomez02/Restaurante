@@ -2,7 +2,7 @@
 
 require("../../conexion/conexion.php");
 
-$sql="SELECT * FROM menu,estado,tipo_comida WHERE menu.id_esta=estado.id_esta and menu.id_comida=tipo_comida.id_comida";
+$sql="SELECT * FROM menu";
 $sentencia=$bd->prepare($sql);
 $sentencia->execute(array());
 ?>
@@ -14,8 +14,8 @@ $sentencia->execute(array());
     foreach ($sentencia as $menu) {
         ?>
             <input type="text" name="codi" readonly value="<?php echo $menu->cod_menu?>">
-            <input type="text" name="estado" readonly value="<?php echo $menu->tipo_estado ?>">
-            <input type="text" name="comida" readonly value="<?php echo $menu->tipo_comida?>">
+           
+            <input type="text" name="comida" readonly value="<?php echo $menu->id_comida?>">
             <input type="text" name="precio" readonly value="<?php echo $menu->precio?>">
             <input type="text" name="tiempo" readonly value="<?php echo $menu->tiempo_estimado?>">
             <input type="number" name="cantidad" placeholder="Cantidad">
