@@ -22,6 +22,8 @@
     $ext = $_FILES['foto'] ['type'];
 
     $destino = "../../foto" . $foto;
+    
+    $FecHr = date('Y-m-d H:i:s');
 
     copy($ruta, $destino);
 
@@ -29,6 +31,9 @@
     $sql = $bd->prepare($insertar);
     $sql->execute(array($cod_menu, $estado, $comida, $oferta, $precio,$time,$foto));
 
+    $detal="INSERT INTO detalle_menu(id_comida, cod_menu,hora) VALUE (?,?,?)";
+    $consult= $bd->prepare($detal);
+    $consult->execute(array($comida,$cod_menu,$FecHr));
 
 
 

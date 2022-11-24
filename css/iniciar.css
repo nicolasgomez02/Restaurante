@@ -154,3 +154,15 @@ button:hover {
 #goRight{
   margin-top: -20px;
 }
+#olvi{
+  text-decoration: none;
+  color: #363A3D;
+  margin-right: 10px;
+
+}
+#olvi:hover{
+  color: #959595;
+}
+#olvi1{
+  margin-left: -10px;
+}

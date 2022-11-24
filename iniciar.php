@@ -83,8 +83,8 @@
           </div>
           <button id="login" name="btn" type="submit">Iniciar sesion</button>
           <button id="goRight" class="off">Registrarse</button>
-          <div>
-            <a href="contraseña.php">¿Olvido su contraseña?</a>
+          <div id="olvi1">
+            <a id="olvi" href="contraseña.php">¿Olvido su contraseña?</a>
           </div>
         </form>
       </div>

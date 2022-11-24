@@ -13,7 +13,23 @@
 	<meta charset="UTF-8">
 	<title>Fast Order</title>
   
-	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/admin.css">
+	<style>
+		#h1{
+			color:#fff;
+			font-size:36px;
+			margin-left:34rem;
+			margin-top:50px;
+		}
+		.p{
+			color:#fff;
+			font-size:27px;
+			margin-left:37rem;
+			margin-top:-10px;
+		}
+
+	</style>
+
 </head>
 <body>
 	<header class="header">
@@ -22,17 +38,12 @@
 			<label for="btn-menu">☰</label>
 		</div>
 			<div class="logo">
-				<h1>Logotipo</h1>
+				 	<img src="../img/LOGO.png" alt="LOGO">
 			</div>
 			<nav class="menu">
 				<a href="../includes/cerrar.php">Cerrar sesion</a>      
 			</nav>
-      <main>
-        <h1>Bienvenido</h1><br>
-        <p><?php  echo $nombre?> <?php echo  $apellido?></p> <br>
 
-        <p><?php echo $tipo ?></p>
-    </main>
 		</div>
 	</header>
 	<div class="capa"></div>
@@ -42,14 +53,22 @@
 	<div class="cont-menu">
 		<nav>
 			<a href="index.php">Inicio</a>
-			<a href="orden/crearo.php">Usuarios</a>
+			<a href="orden/crearo.php">Crear pedido</a>
 			<a href="clientes/panelC.php">Clientes</a>
 			<a href="menu/index.php">Menu</a>
-			<a href="registros/index.php">Registros</a>
-			<a href="reportes/index.php">Reportes</a>
 		</nav>
 		<label for="btn-menu">✖️</label>
 	</div>
 </div>
+<main>	
+
+        <h1 id="h1">Bienvenido <?php echo $tipo ?></h1><br>
+
+		<p class="p"><?php  echo $nombre?> <?php echo  $apellido?></p>
+		<br>
+		
+
+        
+    </main>
 </body>
 </html>
